@@ -1,0 +1,36 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BUY</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <h1><a href="{% url 'app:index' %}">BUY</a></h1>
+      <div class="head-menu">
+        {% if request.user.is_authenticated %}
+            <span>Point{{ user.point | intcomma }}</span>
+            <span><a href="{% url 'app:fav_products' %}">お気に入り</a></span>
+            <span><a href="{% url 'app:cart' %}">カート</a></span>
+            <span><a href="{% url 'app:order_history' %}">注文履歴</a></span>
+            <a href="{% url 'app:logout' %}">ログアウト</a>
+        {% else %}
+            <a href="{% url 'app:login' %}">ログイン</a>
+            <a href="{% url 'app:signup' %}">新規登録</a>
+        {% endif %}
+      </div>
+    <div>
+  </header>
+  <div class="container">
+    {% for message in messages %}
+        <p class="message-{{ message.tag }}">{{ message }}</p>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

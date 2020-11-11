@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="order_history">
+  <h2>注文履歴</h2>
+  {% for sale in sales %}
+  <div class="order-item">
+    <div class="order-item-img">
+      <a href="{% url 'app:detail' sale.product.id %}">
+        <img src="{{ sale.product.img.url }}" name="product-img">
+      </a>
+    </div>
+    <div class="order-item-info">
+      <h2>{{ sale.product.name }}</h2>
+      <div>価格:<span class="info-value">{{ sale.price | intcomma }}</span></div>
+      <div>個数:<span class="info-value">{{ sale.amount | intcomma }}</span></div>
+      <hr>
+      <div>
+        小計:<span class="info-value">{{ sale.subtotal | intcomma }}</span>
+        日付:<span class="info-value">{{ sale.created_at | date:"Y/m/d" }}</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
